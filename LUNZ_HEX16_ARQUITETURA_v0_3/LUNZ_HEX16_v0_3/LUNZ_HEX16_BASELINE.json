@@ -1,0 +1,105 @@
+{
+  "project": "LUNZ HEX-16",
+  "version": "0.3-draft",
+  "status": "proposed-baseline-not-RTL-validated",
+  "core": {
+    "count": 16,
+    "isa_name": "LUNZ-64",
+    "architectural_width_bits": 64,
+    "instruction_width_bits": 32,
+    "integer_registers": 32,
+    "zero_register": "r0",
+    "issue_width": 1,
+    "execution": "in-order",
+    "pipeline_stages": [
+      "IF",
+      "ID",
+      "EX",
+      "MEM",
+      "WB"
+    ],
+    "simd": false,
+    "vector": false,
+    "smt": false,
+    "dedicated_gpu": false,
+    "dedicated_npu": false,
+    "dedicated_fpu_first_version": false,
+    "speculation": false
+  },
+  "clock": {
+    "nominal_ghz": 3.0,
+    "exploration_min_ghz": 0.5,
+    "target_max_ghz": 3.0,
+    "simulator_exploration_max_ghz": 3.5,
+    "user_selectable_within_validated_points": true,
+    "initial_domains": 1,
+    "per_core_clock_gating": true,
+    "per_core_dvfs": false
+  },
+  "l1": {
+    "reference_size_kib_per_core_per_cache": 16,
+    "experimental_size_kib_per_core_per_cache": 14,
+    "caches_per_core": [
+      "L1I",
+      "L1D"
+    ],
+    "line_bytes": 64,
+    "reference_associativity_ways": 4,
+    "reference_sets": 64,
+    "replacement": "pseudo-LRU",
+    "total_reference_l1_kib": 512,
+    "total_experimental_l1_kib": 448,
+    "experimental_14kib_candidate_geometry": {
+      "sets": 32,
+      "ways": 7,
+      "requires_synthesis_evaluation": true
+    }
+  },
+  "l2": {
+    "organization": "distributed per-tile slices",
+    "size_kib_per_slice": 128,
+    "slice_count": 16,
+    "total_kib": 2048,
+    "line_bytes": 64,
+    "associativity_ways": 8,
+    "sets_per_slice": 256
+  },
+  "memory": {
+    "endianness": "little",
+    "addressing": "byte-addressed",
+    "virtual_address_bits": 48,
+    "physical_address_bits": 40,
+    "base_page_bytes": 4096,
+    "page_table_levels": 4,
+    "data_misaligned_access": "trap-in-first-implementation",
+    "coherence": "directory-based-MSI-draft",
+    "store_buffer_entries_candidate": 2
+  },
+  "noc": {
+    "topology": "16-tile irregular-boundary hex-neighbor graph",
+    "max_neighbors_per_tile": 6,
+    "link_width_bits_per_direction": 64,
+    "simulated_hop_latency_cycles_at_3ghz": 2,
+    "deadlock_free_routing_required_before_rtl_freeze": true
+  },
+  "first_soc": [
+    "boot_rom",
+    "timer",
+    "interrupt_controller",
+    "uart_debug",
+    "debug_interface",
+    "memory_mapped_peripherals"
+  ],
+  "validation": {
+    "functional_emulator_before_rtl": true,
+    "trace_based_cache_simulation_before_cache_decision": true,
+    "multicore_coherence_tests": true,
+    "synthesis_and_timing_before_claiming_efficiency": true
+  },
+  "open_source_policy": {
+    "hardware_rtl_proposed_license": "CERN-OHL-S-2.0",
+    "software_tools_proposed_license": "MIT",
+    "isa_documentation_proposed_license": "CC-BY-SA-4.0",
+    "status": "recommendation-subject-to-review"
+  }
+}
